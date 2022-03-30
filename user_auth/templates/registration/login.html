@@ -1,0 +1,173 @@
+{% extends "layout.html" %}
+{% block style %}
+
+<style>
+  input[type=text],
+  input[type=password],
+  input[type=email] {
+    width: 90%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+  }
+
+  input[type=text]:focus,
+  input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+
+  hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+  }
+
+  /* Set a style for all buttons */
+  button {
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+  }
+
+  button:hover {
+    opacity: 1;
+  }
+
+  /* Extra styles for the cancel button */
+  .content-section {
+    width: 40%;
+
+    position: relative;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+  }
+
+  .text-muted {
+    position: relative;
+    top: 50px;
+    left: 40%;
+
+  }
+
+  .signupbtn {
+    float: left;
+    width: 50%;
+  }
+
+  /* Add padding to container elements */
+  .container {
+    padding: 16px;
+  }
+
+  /* Clear floats */
+  .clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  /* Change styles for cancel button and signup button on extra small screens */
+  @media screen and (max-width: 300px) {
+
+    .cancelbtn,
+    .signupbtn {
+      width: 100%;
+    }
+  }
+
+  /* Add a black background color to the top navigation */
+  .topnav {
+    background-color: grey;
+    overflow: hidden;
+  }
+
+  /* Style the links inside the navigation bar */
+  .topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  /* Change the color of links on hover */
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  /* Add an active class to highlight the current page */
+  .topnav a.active {
+    background-color: #04AA6D;
+    color: white;
+  }
+
+  /* Hide the link that should open and close the topnav on small screens */
+  .topnav .icon {
+    display: none;
+  }
+</style>
+{%endblock style%}
+
+{% block content %}
+
+<div class="topnav" id="myTopnav">
+  <a href="{%url 'home'%}" class="active">Home</a>
+  <a href="." class="active">Register</a>
+  <a href="." class="active">Login</a>
+
+</div>
+<br>
+<div class="content-section">
+  <form method="POST" style="border:1px solid #ccc">
+    {%csrf_token%}
+    <div class="container">
+      <h1>Login Up</h1>
+      <hr>
+
+      <label for="form.username"><b>Username</b></label><br>
+      {{ form.username }}<br>
+      <label for="form.password"><b>Password</b></label><br>
+      {{ form.password }}<br>
+
+
+      <div class="clearfix">
+        <style>
+          .cancelbtn {
+            padding: 14px 20px;
+            background-color: #f44336;
+          }
+
+          /* Float cancel and signup buttons and add an equal width */
+          .cancelbtn,
+          .signupbtn {
+            float: left;
+            width: 50%;
+          }
+        </style>
+        <button type="submit" class="signupbtn"> Login</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="border-top pt-3">
+  <p class="text-muted">
+    Create An Account? <a class="ml-2" href="../register">Sign Up</a>
+  </p>
+</div>
+
+
+{% endblock content%}
