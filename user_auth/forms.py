@@ -20,5 +20,3 @@ class NewUser(UserCreationForm):
 # class PeronForm(forms.ModelForm):
 #     model = Person
 #     fields = ["__all__"]
-
-
