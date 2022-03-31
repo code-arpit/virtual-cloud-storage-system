@@ -52,8 +52,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'major2.urls'
-LOGIN_REDIRECT_URL =  "home"
-LOGOUT_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL =  "/"
+LOGOUT_REDIRECT_URL = "/"
 
 TEMPLATES = [
     {
