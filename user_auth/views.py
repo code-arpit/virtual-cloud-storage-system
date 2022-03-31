@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from .forms import NewUser
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 def home(request):
     return render(request, 'home.html', {})
@@ -8,7 +9,6 @@ def home(request):
 def signup(request):
     if request.method =='POST':
         form = NewUser(request.POST)
-        print(form)
         if form.is_valid():
             user = form.save()
             messages.success(request, 'Registration Successful')
@@ -21,13 +21,9 @@ def signup(request):
     }
     return render(request, 'registration/signup.html', context)
 
-
-# <label for="form.username"><b>Username</b></label>
-#               {{ form.username }}<br>
-#               <label for="form.email"><b>Enter Email</b></label> <br>
-#               {{ form.email }}<br>
-         
-#               <label for="form.password1"><b>Enter Password</b></label> <br>
-#               {{ form.password1 }}<br>
-#               <label for="form.password2"><b>Re-Enter Password</b></label> <br>
-#               {{ form.password2 }}<br>
+def dashboard(request, id=id):
+    user = get_object_or_404(User, id=id)
+    context ={
+        "first_name": user.first_name
+    }
+    return render(request, 'dashboard.html', context)

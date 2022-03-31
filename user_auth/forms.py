@@ -8,7 +8,7 @@ class NewUser(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username','email', 'password1', 'password2']
+        fields = ['first_name', 'last_name', 'username','email', 'password1', 'password2']
     
     def save(self, commit=True):
         user = super(NewUser, self).save(commit=False)
@@ -20,3 +20,5 @@ class NewUser(UserCreationForm):
 # class PeronForm(forms.ModelForm):
 #     model = Person
 #     fields = ["__all__"]
+
+

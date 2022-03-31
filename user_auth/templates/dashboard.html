@@ -1,0 +1,148 @@
+{% extends "layout.html" %}
+{% block style %}
+<style>
+	/* Add a black background color to the top navigation */
+	.topnav {
+    background-color: grey;
+    overflow: hidden;
+  }
+
+  /* Style the links inside the navigation bar */
+  .topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  /* Change the color of links on hover */
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  /* Add an active class to highlight the current page */
+  .topnav a.active {
+    background-color: #04AA6D;
+    color: white;
+  }
+
+  /* Hide the link that should open and close the topnav on small screens */
+  .topnav .icon {
+    display: none;
+  }
+</style>
+{% endblock style %}
+
+{% block content %}
+	<div class="topnav" id="myTopnav">
+		<a href="..{% url 'home'%}" class="active">Home</a>
+		<a href="..{% url 'logout' %}" class="active">Logout</a>
+	
+	</div>
+	<br>
+
+
+	<h2><p class="text-center ">Welcome, {{ user.first_name|default:'Guest' }}</p></h2>
+	 <div class="border border-dark p-3 mb-3">
+
+          <center>
+          	<button onclick="showUploadDiv('mydiv')" class="btn btn-outline-info">
+          		Upload
+          	</button>
+          	<button onclick="showDownloadDiv('mydiv1')" class="btn btn-outline-info">
+          		Download
+          	</button>
+          	</center>
+        
+        </div>
+
+
+	    <div class="border border-dark p-3 mb-3" id="mydiv" style="display: none">
+			<form action="/upload" method="POST" enctype="multipart/form-data">
+				<div class="form-group">
+					<label>Select File</label>
+					<div class="custom-file">
+						<input oninput="filesize(this);" type="file" class="custom-file-input" name="file" id="file">
+						<label class="custom-file-label" for="file">No File Selected</label>
+					</div>
+				</div>
+
+				<button type="submit" class="btn btn-outline-info">Upload File</button>
+			</form>
+		</div>
+
+
+		<div class="border border-dark p-3 mb-3" id="mydiv1" style="display: none">
+			<table border="1">
+			<tr>
+			<td>Your Uploads</td>
+			</tr>
+			<tr>
+			<td>{{ list }}
+			<a>{{ name }}</a>
+			<br>
+			</td>
+			</tr>
+			</table>
+		</div>
+
+
+{% endblock content %}
+
+{% block script %}
+
+<script>
+function showUploadDiv(ele) 
+{
+var srcElement = document.getElementById(ele);
+	if (srcElement != null) 
+	{
+		if (srcElement.style.display == "block") 
+		{
+			srcElement.style.display = 'none';
+		}
+		else 
+		{
+			srcElement.style.display = 'block';
+		}
+		return false;
+	}
+}
+
+function showDownloadDiv(ele) 
+{
+var srcElement = document.getElementById(ele);
+	if (srcElement != null) 
+	{
+		if (srcElement.style.display == "block") 
+		{
+			srcElement.style.display = 'none';
+		}
+		else 
+		{
+			srcElement.style.display = 'block';
+		}
+		return false;
+	}
+}
+
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+
+
+function filesize(elem)
+{
+	document.cookie = `filesize=${elem.files[0].size}`;
+}
+
+
+</script>
+
+
+{% endblock %}
