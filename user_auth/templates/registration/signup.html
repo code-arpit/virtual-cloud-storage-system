@@ -84,9 +84,10 @@
           width: 100%;
         }
       }
-    /* Add a black background color to the top navigation */
+
+/* Add a black background color to the top navigation */
 .topnav {
-  background-color:grey;
+  background-color:rgb(230, 205, 205);
   overflow: hidden;
 }
 
@@ -94,23 +95,23 @@
 .topnav a {
   float: left;
   display: block;
-  color: #f2f2f2;
+  color: #ffffff;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
 }
 
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
 /* Add an active class to highlight the current page */
 .topnav a.active {
   background-color: #04AA6D;
   color: white;
+}
+
+.topnav a.right{
+  background-color: #04AA6D;
+  color: rgb(255, 255, 255);
+  float: right;
 }
 
 /* Hide the link that should open and close the topnav on small screens */
@@ -123,7 +124,10 @@
 {% block content %}
       <div class="topnav" id="myTopnav">
         <a href="{% url 'home'%}" class="active">Home</a>
-        <a href="{%url 'login'%}" class="active">Login</a>
+        <a href="{%url 'login'%}" class="active">Dashboard</a>
+      <a href="{%url 'login'%}" class="active">Account</a>
+      
+        <a href="{%url 'login'%}" class="right">Login</a>
 
       </div>
       <br>

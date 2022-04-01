@@ -1,3 +1,4 @@
+from pickletools import read_uint1
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import NewUser
 from django.contrib import messages
@@ -27,3 +28,10 @@ def dashboard(request, id=id):
         "first_name": user.first_name
     }
     return render(request, 'dashboard.html', context)
+
+def account(request, id=id):
+    user = get_object_or_404(User, id=id)
+    context = {
+        'user' : user
+    }
+    return render(request, 'account.html', context)

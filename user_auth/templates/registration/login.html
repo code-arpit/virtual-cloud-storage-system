@@ -86,34 +86,34 @@
     }
   }
 
-  /* Add a black background color to the top navigation */
-  .topnav {
-    background-color: grey;
-    overflow: hidden;
-  }
+ /* Add a black background color to the top navigation */
+.topnav {
+  background-color:rgb(230, 205, 205);
+  overflow: hidden;
+}
 
-  /* Style the links inside the navigation bar */
-  .topnav a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  }
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  display: block;
+  color: #ffffff;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
 
-  /* Change the color of links on hover */
-  .topnav a:hover {
-    background-color: #ddd;
-    color: black;
-  }
+/* Add an active class to highlight the current page */
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
 
-  /* Add an active class to highlight the current page */
-  .topnav a.active {
-    background-color: #04AA6D;
-    color: white;
-  }
+.topnav a.right{
+  background-color: #04AA6D;
+  color: rgb(255, 255, 255);
+  float: right;
+}
 
   /* Hide the link that should open and close the topnav on small screens */
   .topnav .icon {
@@ -126,8 +126,9 @@
 
 <div class="topnav" id="myTopnav">
   <a href="{%url 'home'%}" class="active">Home</a>
-  <a href="." class="active">Register</a>
-  <a href="." class="active">Login</a>
+  <a href="{%url 'login'%}" class="active">Dashboard</a>
+      <a href="{%url 'login'%}" class="active">Account</a>
+  <a href="{%url 'signup'%}" class="right">Register</a>
 
 </div>
 <br>
@@ -165,7 +166,7 @@
 </div>
 <div class="border-top pt-3">
   <p class="text-muted">
-    Create An Account? <a class="ml-2" href="../signup">Sign Up</a>
+    Create An Account? <a class="ml-2" href="../signup">Register</a>
   </p>
 </div>
 
