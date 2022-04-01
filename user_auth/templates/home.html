@@ -43,11 +43,11 @@
 <div class="topnav" id="myTopnav">
   <a href="." class="active">Home</a>
   {% if user.is_authenticated %}
-  # <a href="../dashboard/{{user.id}}" class="active">View Dashboard</a>
-  <a href="..{% url 'logout' %}" class="active">Logout</a>
+      <a href="../dashboard/{{user.id}}" class="active">View Dashboard</a>
+      <a href="..{% url 'logout' %}" class="active">Logout</a>
   {% else %}
-    <a href="{% url 'signup'%}" class="active">Sign Up</a>
-    <a href=" {% url 'login' %}" class="active"> Login </a>
+      <a href="{% url 'signup'%}" class="active">Sign Up</a>
+      <a href=" {% url 'login' %}" class="active"> Login </a>
   {% endif %}
 
 </div>
@@ -55,20 +55,9 @@
 <div>
   <h1>Hello, {{ user.first_name|default:'Guest'}}</h1>
 <h2>Welcome to Your Virtual CLoud Storage</h2>
-<h3> Move to Dashboard to views your files</h3>
-  
+{% if user.is_authenticated %}
+  <h3> Move to Dashboard to views your files</h3>
+ {%endif%} 
 
 </div>
 {% endblock content %}
-
-Requirements
-
-Hardware:
-    • 8 GB RAM 
-    • Intel Core i5 64-bit Processor 
-    • Input and Output Device
-Software: 
-    • Python 3.8 or above IDE – Visual Studio Code/ Pycharm
-    • Python Library Required – Django, Django Rest Framework, Sqlite
-    • Windows and Linux OS
-    • Internet connectivity required Chrome Browser,Mozil1a Firefox,Safari(Any one of them necessary)

@@ -1,0 +1,127 @@
+Basic command--
+
+	1)Building Container Image
+		In order to build the application, we need to use a Dockerfile.
+		A Dockerfile is simply a text-based script of instructions that 
+		is used to create a container image.
+		image_name -- getting_started
+		
+		#docker build -t getting_started .
+		
+	2)Running Container
+		#docker run -d -p 80:80 getting-started
+
+		    -d - run the container in detached mode (in the background)
+		    -p 80:80 - map port 80 of the host to port 80 in the container
+		    getting-started - the image to use
+
+	3)getting cotainer id 
+		#docker ps or #docker container ls
+		
+		for checking images 
+			#docker image ls
+	
+	4)stopping container
+		#docker stop container_id
+	
+		removing container
+			#docker rm container_id
+
+		stopping and removing at the same time 
+			#docker rm -f <container_id>
+
+	5)pushing container on hub
+		--create repo on docker hub
+		--use same name for repo
+		--from command line 
+			#docker tag tagline user_name/getting-started
+		
+		--login from command line
+			#docker login -u user_name
+		
+		--pushing
+			#docker push user_name/getting-started
+			
+			
+Docker Volumes
+	1) Look for database files
+		#docker exec <container_id> cat /etc/todos/todo.db
+
+	2) create a volume
+		#docker volume create todo-db
+
+	3) map colume to app when you runn the image
+		#docker run -dp 3000:3000 -v todo-db:/etc/todos get-start
+
+	4) inspect your volume 
+		#docker inspect volume todo-db
+
+
+Docker Networking(connecting conatiners)
+	1) create a network 
+		#docker network create todo-app
+
+	2)start a mysql container and attach it to the network.
+		#docker run -d \
+			--network todo-app --network-alias mysql \
+			-v todo-mysql-data:/var/lib/mysql \
+			-e MYSQL_ROOT_PASSWORD=secret \
+			-e MYSQL_DATABASE=todos \
+			mysql:5.7
+
+	3)check that the mysql is up and running and connected
+		#docker exec -it <mysql_container_id> mysql -u root -p
+			$password is <secret>
+		This will start the mysql command line and you can run queries and check
+		the database.
+
+	4)The todo app supports the setting of a few environment variables to specify MySQL
+	connection settings. They are:
+		MYSQL_HOST - the hostname for the running MySQL server
+		MYSQL_USER - the username to use for the connection
+		MYSQL_PASSWORD - the password to use for the connection
+		MYSQL_DB - the database to use once connected
+
+		Here we are connecting the our backend app container with  mysql database container
+		inside the network(todo_app)
+			#docker run -dp 3000:3000 \
+				-w /app -v "$(pwd):/app" \
+				--network todo-app \
+				-e MYSQL_HOST=mysql \
+				-e MYSQL_USER=root \
+				-e MYSQL_PASSWORD=secret \
+				-e MYSQL_DB=todos \
+				node:12-alpine \
+				sh -c "yarn install && yarn run dev"
+		
+	5)check if the database is connected to the app through the network
+		#docker exec -it <mysql-container-id> mysql -p todos
+
+		here we are plaing the port (-p) to the todos database because we have linked 
+		the mysql-> todos database -> todo app -> localhost:3000/
+
+Docker (build python images)
+	1) make the django project, requirements.txt file.
+	2)add the docker file to the project
+		[
+			FROM python:3.8-slim-buster
+
+			WORKDIR /code
+
+			COPY requirements.txt requirements.txt
+
+			RUN pip install -r requirements.txt
+
+			COPY . .
+
+			CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+			EXPOSE 8000
+		]
+
+	3)make build using ("docker build -t <project_name> .")
+	4)run image using("docker run -dp 8000:8000 <project_name>")
+
+
+Docker compose bash
+	1)#docker exec -it <image> bash
