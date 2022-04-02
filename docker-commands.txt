@@ -174,4 +174,7 @@ Docker compose
 	6)docker-compose up
 
 	7)To open bash shell 
-		docker exec -it <image_id> bash
+		docker exec -it <container_id> bash
+	
+	8)give permissions
+		sudo chown -R user:user .
