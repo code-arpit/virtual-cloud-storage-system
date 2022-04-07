@@ -135,19 +135,43 @@
 <div class="content-section">
     <form method="POST" style="border:1px solid #ccc">
         {%csrf_token%}
-        <div class="container">
-            <h1>Choose a Subscription Plan</h1>
+        <tr>
+            <th><label for="id_username">Hi,</label></th>
+            <td>
+                <input class="user" type="text" name="username" maxlength="50" required id="id_username" value={{username}} readonly>        
+            </td>
+        </tr>
+        <tr>
+            <th><label>Choose a Subscription Plan:</label></th>
+            <td>
+                <ul class="errorlist">
+                    <li>This field is required.</li>
+                </ul>
+                <div id="id_subscription_plan">
+                    <div>
+                        <label for="id_subscription_plan_0"><input type="radio" name="subscription_plan"
+                                value="Free_plan" required id="id_subscription_plan_0">
+                            Free plan</label>
 
-            <input type="radio" id="Free_plan" name='subscription_plan' value="Free_Plan">
-            <label for="Free_plan">Free Plan</label><br>
-            <input type="radio" id="_plan" name='subscription_plan' value="_Plan">
-            <label for="_plan"> Plan</label><br>
-            <input type="radio" id="Organisationplan" name='subscription_plan' value="Organisation_Plan">
-            <label for="Organisation_plan">Organisation Plan</label><br>
+                    </div>
+                    <div>
+                        <label for="id_subscription_plan_1"><input type="radio" name="subscription_plan"
+                                value="Student_plam" required id="id_subscription_plan_1">
+                            Student Plan</label>
 
+                    </div>
+                    <div>
+                        <label for="id_subscription_plan_2"><input type="radio" name="subscription_plan"
+                                value="Organisation_Plan" required id="id_subscription_plan_2">
+                            Organisation Plan</label>
 
-            <button type="submit" class="button"> Sign up </button>
-        </div>
+                    </div>
+                </div>
+                
+
+            </td>
+        </tr>
+        <button type="submit" class="button"> Sign up </button>
 </div>
 </form>
 </div>

@@ -2,17 +2,20 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 
-from .forms import NewUser
+from .forms import NewUser, SubscriptionForm
 from .models import Subscription
 
 def home(request):
     return render(request, 'home.html', {})
 
+global username
 def signup(request):
     if request.method =='POST':
         form = NewUser(request.POST)
         if form.is_valid():
-            user = form.save()
+            username = request.POST.get("username")
+            print(username)
+            form.save()
             messages.success(request, 'Registration Successful')
             return redirect("/subscription")
         messages.error(request, "Invalid Information")
@@ -25,13 +28,22 @@ def signup(request):
 
 def subscription(request):
     if request.method == "POST":
-        form = Subscription(request.POST)
+        form = SubscriptionForm(request.POST)
+        # print(form)
+        # form.subscription_plan = request.POST.get("subscription_plan")
+        # print(form.subscription_plan)
+        # print(form.cleaned_data)
         if form.is_valid():
-            form.save()
-            return redirect("../login")
+            form_user = form.cleaned_data['username']
+            form_subs = form.cleaned_data['subscription_plan']
+            form_data = Subscription(subscription_plan = form_subs, username = form_user)
+            form_data.save()
+            return redirect("/login")
+
     form = Subscription()
     context = {
-        'form': form
+        'username' : username,
+        'subscription_plan': form.subscription_plan
     }
     return render(request, "subscription.html", context)
 

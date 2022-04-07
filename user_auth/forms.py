@@ -1,3 +1,4 @@
+from cProfile import label
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -17,14 +18,16 @@ class NewUser(UserCreationForm):
             user.save()
         return user
 
-class Subscription():
-    class Meta:
-        model = Subscription
-        fields = ["__all__"]
+class SubscriptionForm(forms.Form):
+    subscription_choices = [
+        ('Free_plan','Free plan'),
+        ('Student_plam', 'Student Plan'),
+        ('Organisation_Plan', 'Organisation Plan')
+    ]
+    subscription_plan = forms.CharField(
+        label="Choose a Subscription Plan",
+        widget=forms.RadioSelect(choices=subscription_choices
+        )
+    )
+    username = forms.CharField(max_length=50)
     
-    def save(self, commit=True):
-        subs = super(Subscription, self).save(commit=False)
-        subs = self.cleaned_data['subsription_plan']
-        if commit:
-            subs.save()
-        return subs

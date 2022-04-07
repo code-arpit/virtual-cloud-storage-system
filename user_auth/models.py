@@ -12,17 +12,13 @@ from django.contrib.auth.models import User
 
 # class PeronManager(models.Model):
 #     user = models.OneToOneField(Person, on_delete=models.CASCADE)
-class SubscriptionPlan(models.TextChoices):
-    Free_plan = 'Free plan'
-    Student_plam = 'Student Plan'
-    Organisation_Plan = 'Organisation Plan'
 
 
 class Subscription(models.Model):
-    subscription_plan = models.CharField(
-        max_length=50, choices=SubscriptionPlan.choices, default=SubscriptionPlan.Free_plan
+    subscription_plan = models.CharField(max_length=50)
+    username = models.OneToOneField(
+        User, on_delete=models.CASCADE, null=True, blank=True
     )
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.subscription_plan+'_'+self.username
+        return self.subscription_plan + "_" + self.username
