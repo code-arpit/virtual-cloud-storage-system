@@ -6,9 +6,9 @@ urlpatterns = [
     path('', home, name='home'),
     path('', include('django.contrib.auth.urls')),
     path('signup/', signup, name='signup'),
-    path('subscription/', subscription, name="subscription"),
-    path('dashboard/<str:id>', dashboard, name='dashboard'),
-    path('account/<str:id>', account, name="account")
+    path('subscription/<str:id>/', subscription, name="subscription"),
+    path('dashboard/<str:id>/', dashboard, name='dashboard'),
+    path('account/<str:id>/', account, name="account")
 
     
 

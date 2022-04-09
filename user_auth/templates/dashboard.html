@@ -39,9 +39,9 @@
 
 {% block content %}
 	<div class="topnav" id="myTopnav">
-		<a href="..{% url 'home'%}" class="active">Home</a>
+		<a href="{% url 'home'%}" class="active">Home</a>
 		<a href="../dashboard/{{user.username}}" class="active">Dashboard</a>
-		<a href="../account/{{user.username}}" class="active">Account</a>
+		<a href="/account/{{user.username}}" class="active">Account</a>
 		<a href="..{% url 'logout' %}" class="right">Logout</a>
 	
 	</div>

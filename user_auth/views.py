@@ -8,7 +8,6 @@ from .models import Subscription
 def home(request):
     return render(request, 'home.html', {})
 
-global username
 def signup(request):
     if request.method =='POST':
         form = NewUser(request.POST)
@@ -17,7 +16,7 @@ def signup(request):
             print(username)
             form.save()
             messages.success(request, 'Registration Successful')
-            return redirect("/subscription")
+            return redirect(f"/subscription/{username}")
         messages.error(request, "Invalid Information")
     
     form = NewUser()
@@ -26,7 +25,8 @@ def signup(request):
     }
     return render(request, 'registration/signup.html', context)
 
-def subscription(request):
+def subscription(request, id=id):
+    username = id
     if request.method == "POST":
         form = SubscriptionForm(request.POST)
         # print(form)
@@ -36,7 +36,7 @@ def subscription(request):
         if form.is_valid():
             form_user = form.cleaned_data['username']
             form_subs = form.cleaned_data['subscription_plan']
-            form_data = Subscription(subscription_plan = form_subs, username = form_user)
+            form_data = Subscription(subscription_plan = form_subs, username = username)
             form_data.save()
             return redirect("/login")
 
