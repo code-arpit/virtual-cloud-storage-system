@@ -3,7 +3,7 @@
 <style>
   /* Add a black background color to the top navigation */
   .topnav {
-    background-color: rgb(230, 205, 205);
+    background-color: white;
     overflow: hidden;
   }
 
@@ -43,7 +43,7 @@
   <a href="/dashboard/{{user.username}}" class="active">Dashboard</a>
   <a href="../account/{{user.username}}" class="active">Account</a>
 
-  <a href="..{% url 'logout' %}" class="right">Logout</a>
+  <a href="{% url 'logout' %}" class="right">Logout</a>
 
 </div>
 <br>
@@ -58,7 +58,8 @@
   <h3 class="text-secondary">Email : {{ user.email }}</h3>
   <hr><br>
   <h3 class="text-secondary"> More Information:</h3>
-  <p class="text-secondary">Allocated Storage:- {{ total_storage }}GB</p>
-  <p class="text-secondary">Storage Used:- {{ storage_used }}GB</p>
+  <h5 class="text-seconday"> Current Plan: {{ selected_plan }}</p>
+  <h5 class="text-secondary">Allocated Space: {{ allocated_storage }} GB</h5>
+  <h5 class="text-secondary">Free Space: {{ remaining_storage }} GB</h5>
 </div>
 {% endblock content %}

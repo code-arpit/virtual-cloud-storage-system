@@ -56,11 +56,37 @@ def dashboard(request, id=id):
     }
     return render(request, 'dashboard.html', context)
 
+def plan_info(plan):
+    plan_information = []
+    if plan == "Student_Plan":
+        plan_information.append('Student Plan')
+        plan_information.append(10)
+        return plan_information
+    elif plan == "Organisation_Plan":
+        plan_information.append('Organisation Plan')
+        plan_information.append(25)
+        return plan_information
+    else:
+        plan_information.append('Free Plan')
+        plan_information.append(5)
+        return plan_information
+
 def account(request, id=id):
-    # user = get_object_or_404(User, id)
     user = User.objects.get(username=id)
+    storage = Subscription.objects.get(username=id)
+    plan = plan_info(storage.subscription_plan)
+    storage_used = storage.storage_used
+    # print(plan)
+    selected_plan = plan[0]
+    allocated_storage = plan[1]
+    remaining_storage = allocated_storage - storage_used
+    # print(f'--------------{remaining_storage}')
+
     context = {
-        'user' : user
+        'user' : user,
+        'allocated_storage' : allocated_storage,
+        'selected_plan' : selected_plan,
+        'remaining_storage' : remaining_storage
     }
     return render(request, 'account.html', context)
 

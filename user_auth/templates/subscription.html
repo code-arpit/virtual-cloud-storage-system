@@ -88,7 +88,7 @@
 
     /* Add a black background color to the top navigation */
     .topnav {
-        background-color: rgb(230, 205, 205);
+        background-color: white;
         overflow: hidden;
     }
 
@@ -133,16 +133,13 @@
 </div>
 <br>
 <div class="content-section">
-    <form method="POST" style="border:1px solid #ccc">
+    <h2>
+        <p class="text-center ">Hi! {{ user.first_name}}{{user.last_name}},</p>
+    </h2>
+    <form method="POST">
         {%csrf_token%}
         <tr>
-            <th><label for="id_username">Hi,</label></th>
-            <td>
-                <input class="user" type="text" name="username" maxlength="50" required id="id_username" value={{username}} readonly>        
-            </td>
-        </tr>
-        <tr>
-            <th><label>Choose a Subscription Plan:</label></th>
+            <th><label><h2>Choose a Subscription Plan:</h2></label></th>
             <td>
                 <ul class="errorlist">
                     <li>This field is required.</li>
@@ -150,24 +147,35 @@
                 <div id="id_subscription_plan">
                     <div>
                         <label for="id_subscription_plan_0"><input type="radio" name="subscription_plan"
-                                value="Free_plan" required id="id_subscription_plan_0">
-                            Free plan</label>
+                                value="Free_Plan" required id="id_subscription_plan_0">
+                                <strong>Free Plan</strong></label>
+                        <p> &emsp; -- Free plan is basically a trial plan for new users</p>
+                        <p> &emsp; -- You get 5GB of total cloud space on going with the free plan</p>
+
 
                     </div>
                     <div>
                         <label for="id_subscription_plan_1"><input type="radio" name="subscription_plan"
-                                value="Student_plam" required id="id_subscription_plan_1">
-                            Student Plan</label>
+                                value="Student_Plan" required id="id_subscription_plan_1">
+                            <strong>Student Plan</strong></label>
+                        <p> &emsp; -- Student plan is for students where student can store all their course work, </p>
+                        <p> &emsp; i.e. notes, assignments etc. </p>
+                        <p> &emsp; -- Get 10Gb of cloud storage on this student plan at 5$</p>
+
 
                     </div>
                     <div>
                         <label for="id_subscription_plan_2"><input type="radio" name="subscription_plan"
                                 value="Organisation_Plan" required id="id_subscription_plan_2">
-                            Organisation Plan</label>
+                            <strong>Organisation Plan</strong></label>
+                        <p> &emsp; -- Organisation plan is for startups or small companies who want to store all their
+                        <p> &emsp; information like important documents, official work etc. on cloud </p>
+                        <p> &emsp; -- Get 25Gb of cloud storage on this student plan at 15$</p>
+                        <p> &emsp; -- For organisation we can also provide custom storage space</p>
 
                     </div>
                 </div>
-                
+
 
             </td>
         </tr>

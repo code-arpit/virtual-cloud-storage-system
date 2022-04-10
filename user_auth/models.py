@@ -15,8 +15,11 @@ from django.contrib.auth.models import User
 
 
 class Subscription(models.Model):
-    subscription_plan = models.CharField(max_length=50)
-    username = models.CharField(max_length=50)
+    username = models.CharField(max_length=50, primary_key=True)
+    subscription_plan = models.CharField(max_length=50, editable=True)
+    storage_used = models.DecimalField(
+        max_digits=4, decimal_places=2, default=0, editable=True
+    )
 
     def __str__(self):
         return self.subscription_plan + "_" + self.username

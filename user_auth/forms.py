@@ -20,8 +20,8 @@ class NewUser(UserCreationForm):
 
 class SubscriptionForm(forms.Form):
     subscription_choices = [
-        ('Free_plan','Free plan'),
-        ('Student_plam', 'Student Plan'),
+        ('Free_Plan','Free plan'),
+        ('Student_plan', 'Student Plan'),
         ('Organisation_Plan', 'Organisation Plan')
     ]
     subscription_plan = forms.CharField(
