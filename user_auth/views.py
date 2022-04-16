@@ -16,7 +16,7 @@ def signup(request):
             print(username)
             form.save()
             messages.success(request, 'Registration Successful')
-            return redirect(f"/subscription/{username}")
+            return redirect(f"/subscription/{username}", )
         messages.error(request, "Invalid Information")
     
     form = NewUser()
