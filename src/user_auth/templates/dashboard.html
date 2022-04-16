@@ -75,9 +75,13 @@
 	<br><hr style="width:50%;text-align:center;">
 	<div class="border border-dark p-3 mb-3">
           <center>
-			<button onclick="showUploadDiv('mydiv')" class="btn btn-outline-info">
-          		Upload
-          	</button>
+			<form method="POST" enctype="multipart/form-data" style="border:1px solid #ccc">
+				{% csrf_token %}
+				<button onclick="showUploadDiv('mydiv')" class="btn btn-outline-info">
+          		{{file}}
+          		</button>
+				  <button type="submit" class="signupbtn">Upload</a></button>
+  			</form>
           	<button onclick="showDownloadDiv('mydiv1')" class="btn btn-outline-info">
           		Download
           	</button>

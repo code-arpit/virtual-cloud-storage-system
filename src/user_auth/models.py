@@ -1,3 +1,5 @@
+import os
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -23,3 +25,19 @@ class Subscription(models.Model):
 
     def __str__(self):
         return self.subscription_plan + "_" + self.username
+
+class Files(models.Model):
+    username = models.CharField(max_length=50)
+    upload = models.FileField(upload_to='media', verbose_name='')
+
+    def __str__(self):
+        return (self.username + '_' + str(self.upload))
+
+    # def get_size(self):
+    #     file = 'media/' + str(self.upload)
+    #     size = os.path.getsize(file)
+    #     value = round(size/1000000, 2)
+    #     ext = ' Mb'
+
+    #     return str(value)+ext
+
