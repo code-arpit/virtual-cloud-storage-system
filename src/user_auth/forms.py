@@ -29,5 +29,3 @@ class SubscriptionForm(forms.Form):
         widget=forms.RadioSelect(choices=subscription_choices
         )
     )
-    username = forms.CharField(max_length=50)
-    

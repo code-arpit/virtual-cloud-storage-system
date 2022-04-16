@@ -32,10 +32,11 @@ def subscription(request, id=id):
         # print(form)
         # form.subscription_plan = request.POST.get("subscription_plan")
         # print(form.subscription_plan)
-        # print(form.cleaned_data)
+        print(username)
         if form.is_valid():
-            form_user = form.cleaned_data['username']
             form_subs = form.cleaned_data['subscription_plan']
+            print(form_subs)
+            print(username)
             form_data = Subscription(subscription_plan = form_subs, username = username)
             form_data.save()
             return redirect("/login")
