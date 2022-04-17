@@ -50,23 +50,37 @@ def subscription(request, id=id):
 
 
 def dashboard(request, id=id):
+    context = {}
     user = get_object_or_404(User, username=id)
-    
+    list_files = Files.objects.filter(username=id)
+    if list_files:
+        files= []
+        for i in list_files:
+            i = i.upload
+            files.append(str(i))
+        context.update({'files':files}) 
+        print(context)
+    else:
+        files = ''
+    # if list_files.values != []:
+    #     files = 'No uploads Yet!'
+
     if request.method == 'POST':
-        print('upload')
+
         form = FileForm(request.FILES)
         # if form.is_valid():
         upload=request.FILES['file']
         object= Files.objects.create(username = id, upload=upload)
         object.save()
-        messages.success(request, 'File Upload Successfully')
+        file_message = messages.success(request, 'File Upload Successfully')
         print('File Upload Successfully')
 
     form = FileForm()
-    context = {
+    context.update({
+        # 'message' : file_message,
         'file' : form,
-        "first_name": user.first_name
-    }
+        "first_name": user.first_name,
+    })
 
 
     return render(request, "dashboard.html", context)

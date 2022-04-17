@@ -53,57 +53,35 @@
 	
 	<center>
 		<div class="border border-dark p-3 mb-3" id="mydiv1" >
+			<h4>Your Uploads</h4>
 			<table border="0">
-				<tr>
-					<th>Your Uploads</th>
-				</tr>
-				
-				<tr>
-					{%if list %}
-						
-						<td>{{ list }}
-						<a>{{ name }}</a>
-					{% else %}
-						<td> Upload files here</td>
-					{% endif %}	
+					
+				{%if files %}
+					{% for file in files%}
+						<tr>{{ file }}</tr>
+						<br>
+					{%endfor%}
+				{% else %}
+					<td> Upload files here</td>
+				{% endif %}	
 					<br>
 					</td>
-				</tr>
+				
 			</table>
 		</div>
 	</center>
 	<br><hr style="width:50%;text-align:center;">
 	<div class="border border-dark p-3 mb-3">
           <center>
-			<form method="POST" enctype="multipart/form-data" style="border:1px solid #ccc">
+			<form method="POST" enctype="multipart/form-data" style="border:0px solid #ccc">
 				{% csrf_token %}
-				<button onclick="showUploadDiv('mydiv')" class="btn btn-outline-info">
           		{{file}}
-          		</button>
 				  <button type="submit" class="signupbtn">Upload</a></button>
   			</form>
+			  <br>
           	<button onclick="showDownloadDiv('mydiv1')" class="btn btn-outline-info">
           		Download
           	</button>
-          	</center>
-        
-        </div>
-
-
-	    <div class="border border-dark p-3 mb-3" id="mydiv" style="display: none">
-			<form action="/upload" method="POST" enctype="multipart/form-data">
-				<div class="form-group">
-					<label>Select File</label>
-					<div class="custom-file">
-						<input oninput="filesize(this);" type="file" class="custom-file-input" name="file" id="file">
-						<label class="custom-file-label" for="file">No File Selected</label>
-					</div>
-				</div>
-
-				<button type="submit" class="btn btn-outline-info">Upload File</button>
-			</form>
-		</div>
-
 
 {% endblock content %}
 
