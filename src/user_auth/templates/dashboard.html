@@ -2,139 +2,94 @@
 {% block style %}
 <style>
 	/* Add a black background color to the top navigation */
-.topnav {
-  background-color: white;
-  overflow: hidden;
-}
+	.topnav {
+		background-color: white;
+		overflow: hidden;
+	}
 
-/* Style the links inside the navigation bar */
-.topnav a {
-  float: left;
-  display: block;
-  color: #ffffff;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
+	/* Style the links inside the navigation bar */
+	.topnav a {
+		float: left;
+		display: block;
+		color: #ffffff;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+		font-size: 17px;
+	}
 
-/* Add an active class to highlight the current page */
-.topnav a.active {
-  background-color: #04AA6D;
-  color: white;
-}
+	/* Add an active class to highlight the current page */
+	.topnav a.active {
+		background-color: #04AA6D;
+		color: white;
+	}
 
-.topnav a.right{
-  background-color: #04AA6D;
-  color: rgb(255, 255, 255);
-  float: right;
-}
+	.topnav a.right {
+		background-color: #04AA6D;
+		color: rgb(255, 255, 255);
+		float: right;
+	}
 
-  /* Hide the link that should open and close the topnav on small screens */
-  .topnav .icon {
-    display: none;
-  }
+	/* Hide the link that should open and close the topnav on small screens */
+	.topnav .icon {
+		display: none;
+	}
+
+	td {
+		padding-left: 100px
+	}
 </style>
 {% endblock style %}
 
 {% block content %}
-	<div class="topnav" id="myTopnav">
-		<a href="{% url 'home'%}" class="active">Home</a>
-		<a href="." class="active">Dashboard</a>
-		<a href="/account/{{user.username}}" class="active">Account</a>
-		<a href="{% url 'logout' %}" class="right">Logout</a>
-	
+<div class="topnav" id="myTopnav">
+	<a href="{% url 'home'%}" class="active">Home</a>
+	<a href="." class="active">Dashboard</a>
+	<a href="/account/{{user.username}}" class="active">Account</a>
+	<a href="{% url 'logout' %}" class="right">Logout</a>
+
+</div>
+<br>
+
+
+<h2>
+	<p class="text-center ">Welcome, {{ user.first_name|default:'Guest' }} to your Dashboard</p>
+</h2>
+<hr><br>
+
+<center>
+	<div class="border border-dark p-3 mb-3" id="mydiv1">
+		<h4>Your Uploads</h4>
+		<table border="0">
+
+			{%if files %}
+				{% for file in files%}
+					<tr>
+					<td>{{file}}</td> 
+					<td><button><a href="{{file.upload.url}}">Click to Download</a></button></td> 
+					</tr>
+				{%endfor%}
+			{% else %}
+				<td> Upload files here</td>
+			{% endif %}
+		
+			<br>
+
+		</table>
 	</div>
-	<br>
-
-
-	<h2><p class="text-center ">Welcome, {{ user.first_name|default:'Guest' }} to your Dashboard</p></h2>
-	<hr><br>
-	
+</center>
+<br>
+<hr style="width:50%;text-align:center;">
+<div class="border border-dark p-3 mb-3">
 	<center>
-		<div class="border border-dark p-3 mb-3" id="mydiv1" >
-			<h4>Your Uploads</h4>
-			<table border="0">
-					
-				{%if files %}
-					{% for file in files%}
-						<tr>{{ file }}</tr>
-						<br>
-					{%endfor%}
-				{% else %}
-					<td> Upload files here</td>
-				{% endif %}	
-					<br>
-					</td>
-				
-			</table>
-		</div>
-	</center>
-	<br><hr style="width:50%;text-align:center;">
-	<div class="border border-dark p-3 mb-3">
-          <center>
-			<form method="POST" enctype="multipart/form-data" style="border:0px solid #ccc">
-				{% csrf_token %}
-          		{{file}}
-				  <button type="submit" class="signupbtn">Upload</a></button>
-  			</form>
-			  <br>
-          	<button onclick="showDownloadDiv('mydiv1')" class="btn btn-outline-info">
-          		Download
-          	</button>
+		<form method="POST" enctype="multipart/form-data" style="border:0px solid #ccc">
+			{% csrf_token %}
+			{{upload_form}}
+			<button type="submit" class="signupbtn">Upload</a></button>
+		</form>
+		{% if message %}
+			<p> {{message}}</p>
+		{% endif %}	
 
-{% endblock content %}
+		{% endblock content %}
 
-{% block script %}
-
-<script>
-function showUploadDiv(ele) 
-{
-var srcElement = document.getElementById(ele);
-	if (srcElement != null) 
-	{
-		if (srcElement.style.display == "block") 
-		{
-			srcElement.style.display = 'none';
-		}
-		else 
-		{
-			srcElement.style.display = 'block';
-		}
-		return false;
-	}
-}
-
-function showDownloadDiv(ele) 
-{
-var srcElement = document.getElementById(ele);
-	if (srcElement != null) 
-	{
-		if (srcElement.style.display == "block") 
-		{
-			srcElement.style.display = 'none';
-		}
-		else 
-		{
-			srcElement.style.display = 'block';
-		}
-		return false;
-	}
-}
-
-$(".custom-file-input").on("change", function() {
-  var fileName = $(this).val().split("\\").pop();
-  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-});
-
-
-function filesize(elem)
-{
-	document.cookie = `filesize=${elem.files[0].size}`;
-}
-
-
-</script>
-
-
-{% endblock %}

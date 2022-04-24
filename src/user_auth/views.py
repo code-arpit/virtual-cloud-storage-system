@@ -1,10 +1,8 @@
 import os
 from django.http import HttpResponseRedirect
-
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
-
 from .forms import NewUser, SubscriptionForm, FileForm
 from .models import Subscription, Files
 
@@ -53,17 +51,7 @@ def dashboard(request, id=id):
     context = {}
     user = get_object_or_404(User, username=id)
     list_files = Files.objects.filter(username=id)
-    if list_files:
-        files= []
-        for i in list_files:
-            i = i.upload
-            files.append(str(i))
-        context.update({'files':files}) 
-        print(context)
-    else:
-        files = ''
-    # if list_files.values != []:
-    #     files = 'No uploads Yet!'
+    
 
     if request.method == 'POST':
 
@@ -73,12 +61,13 @@ def dashboard(request, id=id):
         object= Files.objects.create(username = id, upload=upload)
         object.save()
         file_message = messages.success(request, 'File Upload Successfully')
+        context.update({'message' : file_message})
         print('File Upload Successfully')
 
     form = FileForm()
     context.update({
-        # 'message' : file_message,
-        'file' : form,
+        'files' : list_files,
+        'upload_form' : form,
         "first_name": user.first_name,
     })
 

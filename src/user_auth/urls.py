@@ -10,7 +10,7 @@ urlpatterns = [
     path('signup/', signup, name='signup'),
     path('subscription/<str:id>/', subscription, name="subscription"),
     path('dashboard/<str:id>/', dashboard, name='dashboard'),
-    path('account/<str:id>/', account, name="account")
+    path('account/<str:id>/', account, name="account"),
 ]
 
 urlpatterns+=static(settings.MEDIA_URL,
