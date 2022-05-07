@@ -27,16 +27,16 @@ class Subscription(models.Model):
 
 class Files(models.Model):
     username = models.CharField(max_length=50)
-    upload = models.FileField(upload_to="media", verbose_name="")
+    upload = models.FileField(upload_to="", verbose_name="")
 
     def __str__(self):
-        self.upload = str(self.upload)[6:]
+        self.upload = str(self.upload)
         return str(self.upload)
 
     def get_size(self):
-        file = "media/" + str(self.upload)
+        file = str(self.upload)
         size = os.path.getsize(file)
         value = round(size / 1000000, 2)
         ext = " Mb"
 
-        return str(value) + ext
+        return [value, ext]

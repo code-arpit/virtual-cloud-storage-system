@@ -54,7 +54,6 @@ def dashboard(request, id=id):
     user = get_object_or_404(User, username=id)
     list_files = Files.objects.filter(username=id)
     for file in list_files:
-        # str(file) = str(file[6:])
         print(file.get_size())
 
     if request.method == "POST":
@@ -100,17 +99,25 @@ def account(request, id=id):
     user = User.objects.get(username=id)
     storage = Subscription.objects.get(username=id)
     plan = plan_info(storage.subscription_plan)
-    storage_used = storage.storage_used
-    # print(plan)
     selected_plan = plan[0]
-    allocated_storage = plan[1]
-    remaining_storage = allocated_storage - storage_used
-    # print(f'--------------{remaining_storage}')
 
+    memory = 0
+    files = Files.objects.filter(username=id)
+    if files:
+        for file in files:
+            size = file.get_size()[0]
+            memory = memory + size
+
+    storage_used = memory
+    print(storage_used)
+    allocated_storage = plan[1]
+    print(allocated_storage)
+    remaining_storage = round(((allocated_storage * 1000) - storage_used) / 1000, 3)
+    print(remaining_storage)
     context = {
         "user": user,
-        "allocated_storage": allocated_storage,
         "selected_plan": selected_plan,
+        "allocated_storage": allocated_storage,
         "remaining_storage": remaining_storage,
     }
     return render(request, "account.html", context)
