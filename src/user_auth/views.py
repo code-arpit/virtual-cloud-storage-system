@@ -1,10 +1,12 @@
 import os
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render, redirect
+
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .forms import NewUser, SubscriptionForm, FileForm
-from .models import Subscription, Files
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
+
+from .forms import FileForm, NewUser, SubscriptionForm
+from .models import Files, Subscription
 
 
 def home(request):
@@ -51,26 +53,29 @@ def dashboard(request, id=id):
     context = {}
     user = get_object_or_404(User, username=id)
     list_files = Files.objects.filter(username=id)
-    
+    for file in list_files:
+        # str(file) = str(file[6:])
+        print(file.get_size())
 
-    if request.method == 'POST':
+    if request.method == "POST":
 
         form = FileForm(request.FILES)
         # if form.is_valid():
-        upload=request.FILES['file']
-        object= Files.objects.create(username = id, upload=upload)
+        upload = request.FILES["file"]
+        object = Files.objects.create(username=id, upload=upload)
         object.save()
-        file_message = messages.success(request, 'File Upload Successfully')
-        context.update({'message' : file_message})
-        print('File Upload Successfully')
+        file_message = messages.success(request, "File Upload Successfully")
+        context.update({"message": file_message})
+        print("File Upload Successfully")
 
     form = FileForm()
-    context.update({
-        'files' : list_files,
-        'upload_form' : form,
-        "first_name": user.first_name,
-    })
-
+    context.update(
+        {
+            "files": list_files,
+            "upload_form": form,
+            "first_name": user.first_name,
+        }
+    )
 
     return render(request, "dashboard.html", context)
 
@@ -109,5 +114,3 @@ def account(request, id=id):
         "remaining_storage": remaining_storage,
     }
     return render(request, "account.html", context)
-
-    
