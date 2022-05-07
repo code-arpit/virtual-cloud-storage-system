@@ -63,16 +63,16 @@
 		<table border="0">
 
 			{%if files %}
-				{% for file in files%}
-					<tr>
-					<td>{{file}}</td> 
-					<td><button><a href="{{file.upload.url}}">Click to Download</a></button></td> 
-					</tr>
-				{%endfor%}
+			{% for file in files%}
+			<tr>
+				<td>{{file}}</td>
+				<td><button><a href="{{file.upload.url}}">Click to Download</a></button></td>
+			</tr>
+			{%endfor%}
 			{% else %}
-				<td> Upload files here</td>
+			<td> Upload files here</td>
 			{% endif %}
-		
+
 			<br>
 
 		</table>
@@ -88,8 +88,7 @@
 			<button type="submit" class="signupbtn">Upload</a></button>
 		</form>
 		{% if message %}
-			<p> {{message}}</p>
-		{% endif %}	
+		<p> {{message}}</p>
+		{% endif %}
 
 		{% endblock content %}
-

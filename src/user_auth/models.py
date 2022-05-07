@@ -19,7 +19,6 @@ from django.db import models
 class Subscription(models.Model):
     username = models.CharField(max_length=50, primary_key=True)
     subscription_plan = models.CharField(max_length=50, editable=True)
-    storage_used = models.DecimalField(max_digits=4, decimal_places=2, default=0, editable=True)
 
     def __str__(self):
         return self.subscription_plan + "_" + self.username
@@ -27,16 +26,16 @@ class Subscription(models.Model):
 
 class Files(models.Model):
     username = models.CharField(max_length=50)
-    upload = models.FileField(upload_to="", verbose_name="")
+    upload = models.FileField()
 
     def __str__(self):
-        self.upload = str(self.upload)
         return str(self.upload)
 
     def get_size(self):
-        file = str(self.upload)
+        file = "./media/" + str(self.upload)
+        print(file)
         size = os.path.getsize(file)
         value = round(size / 1000000, 2)
-        ext = " Mb"
+        ext = "Mb"
 
         return [value, ext]

@@ -18,7 +18,7 @@ def signup(request):
         form = NewUser(request.POST)
         if form.is_valid():
             username = request.POST.get("username")
-            print(username)
+
             form.save()
             messages.success(request, "Registration Successful")
             return redirect(
@@ -35,11 +35,10 @@ def subscription(request, id=id):
     username = id
     if request.method == "POST":
         form = SubscriptionForm(request.POST)
-        # print(username)
+
         if form.is_valid():
             form_subs = form.cleaned_data["subscription_plan"]
-            # print(form_subs)
-            # print(username)
+
             form_data = Subscription(subscription_plan=form_subs, username=username)
             form_data.save()
             return redirect("/login")
@@ -52,25 +51,21 @@ def subscription(request, id=id):
 def dashboard(request, id=id):
     context = {}
     user = get_object_or_404(User, username=id)
-    list_files = Files.objects.filter(username=id)
-    for file in list_files:
-        print(file.get_size())
+    files = Files.objects.filter(username=id)
 
     if request.method == "POST":
 
         form = FileForm(request.FILES)
-        # if form.is_valid():
         upload = request.FILES["file"]
         object = Files.objects.create(username=id, upload=upload)
         object.save()
         file_message = messages.success(request, "File Upload Successfully")
         context.update({"message": file_message})
-        print("File Upload Successfully")
 
     form = FileForm()
     context.update(
         {
-            "files": list_files,
+            "files": files,
             "upload_form": form,
             "first_name": user.first_name,
         }
@@ -112,7 +107,7 @@ def account(request, id=id):
     print(storage_used)
     allocated_storage = plan[1]
     print(allocated_storage)
-    remaining_storage = round(((allocated_storage * 1000) - storage_used) / 1000, 3)
+    remaining_storage = round((allocated_storage - (storage_used / 1000)), 4)
     print(remaining_storage)
     context = {
         "user": user,

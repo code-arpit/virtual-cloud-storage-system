@@ -1,7 +1,7 @@
-from cProfile import label
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+
 from .models import Subscription
 
 
@@ -37,6 +37,7 @@ class SubscriptionForm(forms.Form):
         label="Choose a Subscription Plan",
         widget=forms.RadioSelect(choices=subscription_choices),
     )
+
 
 class FileForm(forms.Form):
     file = forms.FileField()
