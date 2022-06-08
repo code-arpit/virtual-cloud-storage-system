@@ -1,65 +1,64 @@
-{% extends "layout.html" %}
-{% block style %}
+{% extends "layout.html" %} {% block style %}
 <style>
-  /* Add a black background color to the top navigation */
-  .topnav {
-    background-color: white;
-    overflow: hidden;
-  }
-
-  /* Style the links inside the navigation bar */
-  .topnav a {
-    float: left;
-    display: block;
-    color: #ffffff;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  }
-
-  /* Add an active class to highlight the current page */
-  .topnav a.active {
-    background-color: #04AA6D;
-    color: white;
-  }
-
-  .topnav a.right {
-    background-color: #04AA6D;
-    color: rgb(255, 255, 255);
-    float: right;
-  }
-
-  /* Hide the link that should open and close the topnav on small screens */
-  .topnav .icon {
-    display: none;
-  }
+    /* Add a black background color to the top navigation */
+    
+    .topnav {
+        background-color: white;
+        overflow: hidden;
+    }
+    /* Style the links inside the navigation bar */
+    
+    .topnav a {
+        float: left;
+        display: block;
+        color: #ffffff;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+    /* Add an active class to highlight the current page */
+    
+    .topnav a.active {
+        background-color: #04AA6D;
+        color: white;
+    }
+    
+    .topnav a.right {
+        background-color: #04AA6D;
+        color: rgb(255, 255, 255);
+        float: right;
+    }
+    /* Hide the link that should open and close the topnav on small screens */
+    
+    .topnav .icon {
+        display: none;
+    }
 </style>
-{% endblock style %}
-
-{% block content %}
+{% endblock style %} {% block content %}
 <div class="topnav" id="myTopnav">
-  <a href="{% url 'home'%}" class="active">Home</a>
-  <a href="/dashboard/{{user.username}}" class="active">Dashboard</a>
-  <a href="." class="active">Account</a>
+    <a href="{% url 'home'%}" class="active">Home</a>
+    <a href="/dashboard/{{user.username}}" class="active">Dashboard</a>
+    <a href="." class="active">Account</a>
 
-  <a href="{% url 'logout' %}" class="right">Logout</a>
+    <a href="{% url 'logout' %}" class="right">Logout</a>
 
 </div>
 <br>
 
 <div>
-  <h2>
-    <p class="text-center ">Welcome {{ user.first_name|default:'Guest'}}{{user.last_name}}, to your account</p>
-  </h2>
+    <h2>
+        <p class="text-center ">Welcome {{ user.first_name|default:'Guest'}}, to your account</p>
+    </h2>
 
-
-  <h3 class="text-secondary">Username : {{ user.username }}</h3>
-  <h3 class="text-secondary">Email : {{ user.email }}</h3>
-  <hr><br>
-  <h3 class="text-secondary"> More Information:</h3>
-  <h5 class="text-seconday"> Current Plan: {{ selected_plan }}</p>
-  <h5 class="text-secondary">Allocated Space: {{ allocated_storage }} GB</h5>
-  <h5 class="text-secondary">Free Space: {{ remaining_storage }} GB</h5>
+    <h3 class="text-secondary">First Name : {{ user.first_name|default:'Guest'}}</h3>
+    <h3 class="text-secondary">Last Name : {{ user.last_name|default:' ' }}</h3>
+    <h3 class="text-secondary">Username : {{ user.username }}</h3>
+    <h3 class="text-secondary">Email : {{ user.email }}</h3>
+    <hr><br>
+    <h2 class="text-secondary"> Subscription Information:</h2>
+    <h3 class="text-seconday"> Current Plan: {{ selected_plan }}</h3>
+    <h3 class="text-secondary">Allocated Space: {{ allocated_storage }} GB</h3>
+    <h3 class="text-secondary">Free Space: {{ remaining_storage }} GB</h3>
 </div>
 {% endblock content %}
